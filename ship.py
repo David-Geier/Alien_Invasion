@@ -20,19 +20,22 @@ class Ship:
     """A class to manage the ship."""
 
     def __init__(self, game: 'AlienInvasion'):
-        """Initialize the ship and set its starting position"""
+        """Initialize the ship, set its starting position, create ship_rect, y value, and movement flags"""
+        
+        # Initialize ship class
         self.game = game
         self.settings = game.settings
         self.screen = game.screen
         self.screen_rect = game.screen.get_rect()
 
+        # Set up ship image (Set at midleft of the screen, rotated 270 degrees)
         self.image = pygame.image.load(self.settings.ship_file)
         self.image = pygame.transform.scale(self.image,
             (self.settings.ship_width, self.settings.ship_height)
             )
         self.image = pygame.transform.rotate(self.image, 270)
-        
 
+        # Create ship rect
         self.rect = self.image.get_rect()
         self.rect.midleft = self.screen_rect.midleft
 
@@ -45,13 +48,13 @@ class Ship:
 
     def update(self):
         """Update the ship's position based on movement flags."""
-        # Update the ship's x value, not the rect.
+        # Update the ship's y value, not the rect.
         if self.moving_up:
             self.y -= self.settings.ship_speed
         if self.moving_down:
             self.y += self.settings.ship_speed
 
-        # Update rect object from self.x.
+        # Update rect object from self.y.
         self.rect.y = self.y
 
     def draw(self):
