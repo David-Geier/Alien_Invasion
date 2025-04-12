@@ -19,7 +19,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from arsenal import Arsenal
-from bullet import Bullet
+from alien import Alien
 
 class AlienInvasion:
     """Overall class to manage game assets and behavior"""
@@ -54,12 +54,15 @@ class AlienInvasion:
 
         # Ship setup
         self.ship = Ship(self, Arsenal(self))
-        
+        # Create alien
+        self.alien = Alien(self, self.settings.screen_width - 100, self.settings.screen_height - 100)
+
     def run_game(self):
         """Main game loop"""
         while self.running:
             self._check_events()
             self.ship.update()
+            self.alien.update()
             self._update_screen()
             self.clock.tick(self.settings.FPS)
 
@@ -67,6 +70,7 @@ class AlienInvasion:
         """Update images on screen, then flip to new screen."""
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
+        self.alien.draw_alien()
         pygame.display.flip()
 
     def _check_events(self):
