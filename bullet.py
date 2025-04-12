@@ -10,23 +10,34 @@ Date: 3/30/2025
 
 import pygame
 from pygame.sprite import Sprite
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from alien_invasion import AlienInvasion
 
 class Bullet(Sprite):
     """A class to manage bullets fired from the ship."""
 
-    def __init__(self, ai_game):
+    def __init__(self, game: 'AlienInvasion'):
         """Create a bullet object at the ship's current position."""
         super().__init__()
-        self.screen = ai_game.screen
-        self.settings = ai_game.settings
-        self.color = self.settings.bullet_color
+
+        # Grab some game data.
+        self.screen = game.screen
+        self.settings = game.settings
+        
+        # Load and transform bullet image for horizontal use.
+        self.image = pygame.image.load(self.settings.bullet_file)
+        self.image = pygame.transform.scale(self.image,
+            (self.settings.bullet_width, self.settings.bullet_height)
+            )
+        self.image = pygame.transform.rotate(self.image, 90)
 
         # Create a bullet rect at (0, 0) and then set correct position.
-        self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
-                                self.settings.bullet_height)
-        self.rect.midtop = ai_game.ship.rect.midright
+        self.rect = self.image.get_rect()
+        self.rect.midtop = game.ship.rect.midright
 
-        # Store the bullet's position as a float/
+        # Store the bullet's position as a float.
         self.x = float (self.rect.x)
 
     def update(self):
@@ -38,4 +49,4 @@ class Bullet(Sprite):
 
     def draw_bullet(self):
         """Draw the bullets to the screen."""
-        pygame.draw.rect(self.screen, self.color, self.rect)
+        self.screen.blit(self.image, self.rect)

@@ -13,11 +13,12 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
+    from arsenal import Arsenal
 
 class Ship:
     """A class to manage the ship."""
 
-    def __init__(self, game: 'AlienInvasion'):
+    def __init__(self, game: 'AlienInvasion', arsenal: 'Arsenal'):
         """Initialize the ship, set its starting position, create ship_rect, y value, and movement flags"""
         
         # Initialize ship class
@@ -44,7 +45,14 @@ class Ship:
         self.moving_up = False
         self.moving_down = False
 
+        # Set up Arsenal
+        self.arsenal = arsenal
+
     def update(self):
+        self._update_ship_movement()
+        self.arsenal.update_arsenal()
+
+    def _update_ship_movement(self):
         """Update the ship's position based on movement flags."""
         # Update the ship's y value, not the rect.
         if self.moving_up:
@@ -57,4 +65,8 @@ class Ship:
 
     def draw(self):
         """Draw a ship at its current location"""
+        self.arsenal.draw()
         self.screen.blit(self.image, self.rect)
+
+    def fire(self):
+        return self.arsenal.fire_bullet()
