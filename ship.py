@@ -8,8 +8,6 @@ Comments: Swapped movement from left/right to up/down. Moved starting location t
 Date: 3/30/2025
 """
 
-
-
 import pygame
 from typing import TYPE_CHECKING
 

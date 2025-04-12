@@ -3,19 +3,19 @@ Title: Alien Invaders
 
 Author: David Geier
 
-Comments: I Chose to go with option number 1; rotate the ship and place it at the left side of the screen
-         To do this I modified each class to accomodate the new mechanics. I chose to change the input keys
-         to use the up and down arrows for more intuitive movement, and renamed the movement methods to reflect
-         the movement of the ship
+Comments: This is an Alien Invasion game with 1 player controlling a ship in one dimension, shooting in the second dimension.
+
+          I Chose to go with option number 1; rotate the ship and place it at the left side of the screen
+          To do this I modified each class to accomodate the new mechanics. I chose to change the input keys
+          to use the up and down arrows for more intuitive movement, and renamed the movement methods to reflect
+          the movement of the ship
 
 Date: 3/30/2025
 """
 
 
 import sys
-
 import pygame
-
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
@@ -49,7 +49,7 @@ class AlienInvasion:
         self.ship = Ship(self)
         
     def run_game(self):
-        """Start the main loop for the game"""
+        """Main game loop"""
         while self.running:
             self._check_events()
             self.ship.update()
@@ -90,13 +90,13 @@ class AlienInvasion:
             self.ship.moving_down = False
         
     def _fire_bullet(self):
-        """Create a new bullet and add it to the bullets group."""
+        """Creates a new bullet and add it to the bullets group."""
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
     
     def _update_bullets(self):
-        """Update position of bullets and get rid of old bullets."""
+        """Updates the position of bullets and gets rid of old bullets."""
         # Update bullet positions.
         self.bullets.update()
 
