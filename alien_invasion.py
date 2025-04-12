@@ -55,7 +55,7 @@ class AlienInvasion:
         # Ship setup
         self.ship = Ship(self, Arsenal(self))
         # Create alien
-        self.alien = Alien(self, self.settings.screen_width - 100, self.settings.screen_height - 100)
+        self.alien = Alien(self, self.settings.screen_width - 100, 100)
 
     def run_game(self):
         """Main game loop"""
