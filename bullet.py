@@ -31,11 +31,11 @@ class Bullet(Sprite):
         self.image = pygame.transform.scale(self.image,
             (self.settings.bullet_width, self.settings.bullet_height)
             )
-        self.image = pygame.transform.rotate(self.image, 90)
+        self.image = pygame.transform.rotate(self.image, 270)
 
         # Create a bullet rect at (0, 0) and then set correct position.
         self.rect = self.image.get_rect()
-        self.rect.midtop = game.ship.rect.midright
+        self.rect.midleft = game.ship.rect.midright
 
         # Store the bullet's position as a float.
         self.x = float (self.rect.x)
