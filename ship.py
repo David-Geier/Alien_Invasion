@@ -36,10 +36,9 @@ class Ship:
 
         # Create ship rect
         self.rect = self.image.get_rect()
-        self.rect.midleft = self.screen_rect.midleft
+        self._center_ship()
 
         # Store a float for the ship's exact vertical position.
-        self.y = float(self.rect.y)
 
         # Movement flags; start with a ship that's not moving.
         self.moving_up = False
@@ -47,6 +46,10 @@ class Ship:
 
         # Set up Arsenal
         self.arsenal = arsenal
+
+    def _center_ship(self):
+        self.rect.midleft = self.screen_rect.midleft
+        self.y = float(self.rect.y)
 
     def update(self):
         self._update_ship_movement()
@@ -70,3 +73,10 @@ class Ship:
 
     def fire(self):
         return self.arsenal.fire_bullet()
+    
+    def check_collisions(self, other_group):
+        if pygame.sprite.spritecollideany(self, other_group):
+            self._center_ship()
+            return True
+        else:
+            return False
