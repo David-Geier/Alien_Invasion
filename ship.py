@@ -32,7 +32,7 @@ class Ship:
         self.image = pygame.transform.scale(self.image,
             (self.settings.ship_height, self.settings.ship_width)
             )
-        self.image = pygame.transform.rotate(self.image, 270)
+        self.image = pygame.transform.rotate(self.image, 90)
 
         # Create ship rect
         self.rect = self.image.get_rect()
@@ -48,7 +48,7 @@ class Ship:
         self.arsenal = arsenal
 
     def _center_ship(self):
-        self.rect.midleft = self.screen_rect.midleft
+        self.rect.midright = self.screen_rect.midright
         self.y = float(self.rect.y)
 
     def update(self):

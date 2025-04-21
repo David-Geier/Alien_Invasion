@@ -35,16 +35,12 @@ class Bullet(Sprite):
 
         # Create a bullet rect at (0, 0) and then set correct position.
         self.rect = self.image.get_rect()
-        self.rect.midleft = game.ship.rect.midright
-
-        # Store the bullet's position as a float.
+        self.rect.midright = game.ship.rect.midright
         self.x = float (self.rect.x)
 
     def update(self):
-        """Move the bullets up the screen"""
-        # Update the exact position of the bullet.
-        self.x += self.settings.bullet_speed
-        # Update the rect position.
+        """Move the bullets to the left on the screen"""
+        self.x -= self.settings.bullet_speed
         self.rect.x = self.x
 
     def draw_bullet(self):

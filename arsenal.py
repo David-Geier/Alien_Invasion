@@ -22,7 +22,7 @@ class Arsenal:
 
     def _remove_bullets_offscreen(self):
         for bullet in self.arsenal.copy():
-            if bullet.rect.right >= self.settings.screen_width:
+            if bullet.rect.left <= 0:
                 self.arsenal.remove(bullet)
 
     def draw(self):
