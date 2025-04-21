@@ -3,7 +3,7 @@ Class: Settings
 
 Author: David Geier
 
-Comments: Swapped the height and width of bullets for horizontal behavior
+Comments: ADD COMMENTS CURRENT TO LAST COMMIT
 
 Date: 3/30/2025
 """
