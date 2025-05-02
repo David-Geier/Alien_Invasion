@@ -13,7 +13,6 @@ Comments: This is an Alien Invasion game with 1 player controlling a ship in one
 Date: 3/30/2025
 """
 
-
 import sys
 import pygame
 from settings import Settings
@@ -40,13 +39,17 @@ class AlienInvasion:
             )
         pygame.display.set_caption(self.settings.name)
       
+        # Set up background
         self.bg = pygame.image.load(self.settings.bg_file)
         self.bg = pygame.transform.scale(self.bg,
             (self.settings.screen_width, self.settings.screen_height)
             )
         
+        # Get stats, HUD
         self.game_stats = GameStats(self)
         self.HUD = HUD(self)
+
+        # Set clock and tick speed
         self.running = True
         self.clock = pygame.time.Clock()
       
@@ -54,11 +57,10 @@ class AlienInvasion:
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
 
-        # Set up sounds.
+        # Set up sounds
         pygame.mixer.init()
         self.laser_sound = pygame.mixer.Sound(self.settings.laser_sound)
         self.laser_sound.set_volume(0.7)
-
         self.impact_sound = pygame.mixer.Sound(self.settings.impact_sound)
         self.impact_sound.set_volume(0.7)
 
@@ -66,6 +68,7 @@ class AlienInvasion:
         self.ship = Ship(self, Arsenal(self))
         self.alien_fleet = AlienFleet(self)
 
+        # Button setup
         self.play_button = Button(self, 'Play')
         self.game_active = False
 
@@ -81,6 +84,8 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS)
 
     def _check_collisions(self):
+        """Check collisions for fleet, ship, and bullets"""
+
         # check collisions of ship
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
@@ -98,6 +103,7 @@ class AlienInvasion:
             self.game_stats.update(collisions)
             self.HUD.update_scores()
 
+        # check if fleet is destroyed
         if self.alien_fleet.check_destroyed_status():
             self._reset_level()
             self.settings.increase_difficulty()
@@ -105,6 +111,8 @@ class AlienInvasion:
             self.HUD.update_level()
 
     def _check_game_status(self):
+        """Determines whether or not the player is out of ships"""
+
         if self.game_stats.ships_left > 0:
             self.game_stats.ships_left -= 1
             self._reset_level()
@@ -113,11 +121,15 @@ class AlienInvasion:
             self.game_active = False
 
     def _reset_level(self):
+        """Removes bullets, empties any remaining aliens, creates new fleet"""
+
         self.ship.arsenal.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet.create_fleet()
 
     def restart_game(self):
+        """Resets stats/HUD/Ship location for a new playthrough"""
+
         self.settings.initialize_dynamic_settings()
         self.game_stats.reset_stats()
         self.HUD.update_scores()
@@ -127,7 +139,8 @@ class AlienInvasion:
         pygame.mouse.set_visible(False)
 
     def _update_screen(self):
-        """Update images on screen, then flip to new screen."""
+        """Update images on screen, flips to new screen."""
+
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
         self.alien_fleet.draw()
@@ -141,6 +154,7 @@ class AlienInvasion:
 
     def _check_events(self):
         """Respond to keypresses and mouse events."""
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -155,6 +169,8 @@ class AlienInvasion:
                 self._check_button_clicked()
 
     def _check_button_clicked(self):
+        """Checks if button has been clicked"""
+
         mouse_position = pygame.mouse.get_pos()
         if self.play_button.check_clicked(mouse_position):
             self.restart_game()
@@ -183,6 +199,6 @@ class AlienInvasion:
             sys.exit()
 
 if __name__ == '__main__':
-    # Make a game instance, and run the game.
+    """Creates game instance and runs game"""
     ai = AlienInvasion()
     ai.run_game()

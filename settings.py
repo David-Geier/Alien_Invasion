@@ -1,11 +1,11 @@
 """
-Class: Settings
+Class: settings
 
 Author: David Geier
 
-Comments: ADD COMMENTS CURRENT TO LAST COMMIT
-
 Date: 3/30/2025
+
+Comments: Central setting management
 """
 
 from pathlib import Path
@@ -45,25 +45,33 @@ class Settings:
         self.button_height = 50
         self.button_color = (0, 135, 50)
 
+        # HUD settings
         self.text_color = (255, 255, 255)
         self.button_font_size = 48
         self.HUD_font_size = 20
         self.font_file = Path.cwd() / 'Assets' / 'Fonts' / 'Silkscreen' / 'Silkscreen-Bold.ttf'
 
     def initialize_dynamic_settings(self):
+        """Initializes dynamic settings so they can be adjusted depending on level"""
+
+        # Ship settings
         self.ship_speed = 5
         self.starting_ship_count = 3
 
+        # Bullet settings
         self.bullet_width = 25
         self.bullet_height = 80
         self.bullet_speed = 7.0
         self.bullets_allowed = 5
         
+        # Fleet settings
         self.alien_points = 50
         self.fleet_speed = 2
         self.fleet_drop_speed = 40 
 
     def increase_difficulty(self):
+        """Increments each level's difficulty"""
+
         self.ship_speed *= self.difficulty_scale
         self.bullet_speed *= self.difficulty_scale
         self.fleet_speed *= self.difficulty_scale

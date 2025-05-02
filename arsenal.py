@@ -1,5 +1,11 @@
-"""Class for managing the arsenal of bullets
+"""
+Class: Arsenal
 
+Author: David Geier
+
+Date: 04/15/25
+
+Comments: Manages a sprite group of bullets
 """
 
 import pygame
@@ -10,6 +16,7 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
 
 class Arsenal:
+    """Class for managing the arsenal of bullets."""
 
     def __init__(self, game: 'AlienInvasion'):
         self.game = game
